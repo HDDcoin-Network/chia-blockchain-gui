@@ -9,8 +9,8 @@ import {
   Loading,
   StateColor,
   Table,
-} from '@chia/core';
-import { Status } from '@chia/icons';
+} from '@hddcoin/core';
+import { Status } from '@hddcoin/icons';
 import { useRouteMatch, useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { Box, Tooltip, Typography } from '@material-ui/core';
@@ -274,7 +274,9 @@ const FullNodeStatus = (props) => {
           ))}
         </Grid>
       ) : (
-        <Loading center />
+        <Flex justifyContent="center">
+          <Loading />
+        </Flex>
       )}
     </Card>
   );
@@ -312,7 +314,9 @@ const BlocksCard = () => {
       {rows.length ? (
         <Table cols={cols} rows={rows} onRowClick={handleRowClick} />
       ) : (
-        <Loading center />
+        <Flex justifyContent="center">
+          <Loading />
+        </Flex>
       )}
     </Card>
   );

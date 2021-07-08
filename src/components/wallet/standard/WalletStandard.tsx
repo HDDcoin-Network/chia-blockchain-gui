@@ -5,13 +5,12 @@ import {
   Amount,
   Fee,
   Form,
-  TextField as ChiaTextField,
+  TextField as HDDcoinTextField,
   AlertDialog,
   CopyToClipboard,
   Flex,
   Card,
-  ConfirmDialog,
-} from '@chia/core';
+} from '@hddcoin/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { useDispatch, useSelector } from 'react-redux';
 import isNumeric from 'validator/es/lib/isNumeric';
@@ -42,7 +41,7 @@ import {
   send_transaction,
   farm_block,
 } from '../../../modules/message';
-import { /* mojo_to_chia_string, */ chia_to_mojo } from '../../../util/chia';
+import { /* mojo_to_hddcoin_string, */ hddcoin_to_mojo } from '../../../util/hddcoin';
 import { openDialog } from '../../../modules/dialog';
 import { get_transaction_result } from '../../../util/transaction_result';
 import config from '../../../config/config';
@@ -53,7 +52,6 @@ import { deleteUnconfirmedTransactions } from '../../../modules/incoming';
 // import WalletGraph from '../WalletGraph';
 import WalletCards from './WalletCards';
 import WalletStatus from '../WalletStatus';
-import useOpenDialog from '../../../hooks/useOpenDialog';
 
 const drawerWidth = 240;
 
@@ -238,7 +236,7 @@ function BalanceCardSubSection(props: BalanceCardSubSectionProps) {
         </Box>
         <Box>
           <Typography variant="subtitle1">
-            {mojo_to_chia_string(props.balance)} {currencyCode}
+            {mojo_to_hddcoin_string(props.balance)} {currencyCode}
           </Typography>
         </Box>
       </Box>
@@ -273,7 +271,7 @@ function BalanceCard(props: BalanceCardProps) {
         balance={balance}
         tooltip={
           <Trans>
-            This is the total amount of chia in the blockchain at the current
+            This is the total amount of hddcoin in the blockchain at the current
             peak sub block that is controlled by your private keys. It includes
             frozen farming rewards, but not pending incoming and outgoing
             transactions.
@@ -285,9 +283,9 @@ function BalanceCard(props: BalanceCardProps) {
         balance={balance_spendable}
         tooltip={
           <Trans>
-            This is the amount of Chia that you can currently use to make
+            This is the amount of HDDcoin that you can currently use to make
             transactions. It does not include pending farming rewards, pending
-            incoming transactions, and Chia that you have just spent but is not
+            incoming transactions, and HDDcoin that you have just spent but is not
             yet in the blockchain.
           </Trans>
         }
@@ -396,7 +394,6 @@ function SendCard(props: SendCardProps) {
   const { sending_transaction, send_transaction_result } = wallet;
 
   const result = get_transaction_result(send_transaction_result);
-
   const result_message = result.message;
   const result_class = result.success
     ? classes.resultSuccess
@@ -454,7 +451,7 @@ function SendCard(props: SendCardProps) {
         openDialog(
           <AlertDialog>
             <Trans>
-              Error: Cannot send chia to coloured address. Please enter a chia
+              Error: Cannot send hddcoin to coloured address. Please enter a hddcoin
               address.
             </Trans>
           </AlertDialog>,
@@ -463,15 +460,15 @@ function SendCard(props: SendCardProps) {
       return;
     }
 
-    if (address.slice(0, 12) === 'chia_addr://') {
+    if (address.slice(0, 12) === 'hddcoin_addr://') {
       address = address.slice(12);
     }
     if (address.startsWith('0x') || address.startsWith('0X')) {
       address = address.slice(2);
     }
 
-    const amountValue = Number.parseFloat(chia_to_mojo(amount));
-    const feeValue = Number.parseFloat(chia_to_mojo(fee));
+    const amountValue = Number.parseFloat(hddcoin_to_mojo(amount));
+    const feeValue = Number.parseFloat(hddcoin_to_mojo(fee));
 
     dispatch(send_transaction(wallet_id, amountValue, feeValue, address));
 
@@ -494,7 +491,7 @@ function SendCard(props: SendCardProps) {
       <Form methods={methods} onSubmit={handleSubmit}>
         <Grid spacing={2} container>
           <Grid xs={12} item>
-            <ChiaTextField
+            <HDDcoinTextField
               name="address"
               variant="filled"
               color="secondary"
@@ -620,23 +617,9 @@ type StandardWalletProps = {
 export default function StandardWallet(props: StandardWalletProps) {
   const { wallet_id } = props;
   const dispatch = useDispatch();
-  const openDialog = useOpenDialog();
 
-  async function handleDeleteUnconfirmedTransactions() {
-    const deleteConfirmed = await openDialog(
-      <ConfirmDialog
-        title={<Trans>Confirmation</Trans>}
-        confirmTitle={<Trans>Delete</Trans>}
-        confirmColor="danger"
-      >
-        <Trans>Are you sure you want to delete unconfirmed transactions?</Trans>
-      </ConfirmDialog>,
-    );
-
-    // @ts-ignore
-    if (deleteConfirmed) {
-      dispatch(deleteUnconfirmedTransactions(wallet_id));
-    }
+  function handleDeleteUnconfirmedTransactions() {
+    dispatch(deleteUnconfirmedTransactions(wallet_id));
   }
 
   return (
@@ -644,7 +627,7 @@ export default function StandardWallet(props: StandardWalletProps) {
       <Flex gap={1} alignItems="center">
         <Flex flexGrow={1}>
           <Typography variant="h5" gutterBottom>
-            <Trans>Chia Wallet</Trans>
+            <Trans>HDDcoin Wallet</Trans>
           </Typography>
         </Flex>
         <More>

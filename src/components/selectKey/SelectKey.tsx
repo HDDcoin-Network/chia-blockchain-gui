@@ -2,7 +2,7 @@ import React from 'react';
 import { Trans } from '@lingui/macro';
 import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
-import { Button, ConfirmDialog, Flex, Logo } from '@chia/core';
+import { Button, ConfirmDialog, Flex, Logo } from '@hddcoin/core';
 import {
   Card,
   Typography,
@@ -23,6 +23,7 @@ import {
   login_action,
   delete_key,
   get_private_key,
+  selectFingerprint,
   delete_all_keys,
 } from '../../modules/message';
 import { resetMnemonic } from '../../modules/mnemonic';
@@ -43,9 +44,10 @@ export default function SelectKey() {
   const hasFingerprints =
     publicKeyFingerprints && !!publicKeyFingerprints.length;
 
-  async function handleClick(fingerprint: Fingerprint) {
-    await dispatch(resetMnemonic());
-    await dispatch(login_action(fingerprint));
+  function handleClick(fingerprint: Fingerprint) {
+    dispatch(resetMnemonic());
+    dispatch(selectFingerprint(fingerprint));
+    dispatch(login_action(fingerprint));
   }
 
   function handleShowKey(fingerprint: Fingerprint) {
@@ -110,7 +112,7 @@ export default function SelectKey() {
               </Typography>
               <Typography variant="subtitle1">
                 <Trans>
-                  Welcome to Chia. Please log in with an existing key, or create
+                  Welcome to HDDcoin. Please log in with an existing key, or create
                   a new key.
                 </Trans>
               </Typography>

@@ -6,14 +6,12 @@ import React, {
 } from 'react';
 import { t, Trans } from '@lingui/macro';
 import { useForm } from 'react-hook-form';
-import { ButtonLoading, Loading, Flex, Form, FormBackButton } from '@chia/core';
+import { ButtonLoading, Flex, Form, FormBackButton } from '@hddcoin/core';
 import PlotNFTSelectBase from './PlotNFTSelectBase';
 import normalizeUrl from '../../../util/normalizeUrl';
 import getPoolInfo from '../../../util/getPoolInfo';
 import InitialTargetState from '../../../types/InitialTargetState';
-import { chia_to_mojo } from '../../../util/chia';
-import useStandardWallet from '../../../hooks/useStandardWallet';
-import PlotNFTSelectFaucet from './PlotNFTSelectFaucet';
+import { hddcoin_to_mojo } from '../../../util/hddcoin';
 
 export type SubmitData = {
   initialTargetState: InitialTargetState;
@@ -43,7 +41,7 @@ async function prepareSubmitData(data: FormData): SubmitData {
     initialTargetState.relative_lock_height = relative_lock_height;
   }
 
-  const feeMojos = chia_to_mojo(fee);
+  const feeMojos = hddcoin_to_mojo(fee);
 
   return {
     fee: feeMojos,
@@ -84,9 +82,6 @@ const PlotNFTSelectPool = forwardRef((props: Props, ref) => {
     hideFee,
   } = props;
   const [loading, setLoading] = useState<boolean>(false);
-  const { balance, loading: walletLoading } = useStandardWallet();
-
-  const hasBalance = !!balance && balance > 0;
 
   const methods = useForm<FormData>({
     shouldUnregister: false,
@@ -116,25 +111,6 @@ const PlotNFTSelectPool = forwardRef((props: Props, ref) => {
     } finally {
       setLoading(false);
     }
-  }
-
-  if (walletLoading) {
-    return <Loading />;
-  }
-
-  if (!hasBalance) {
-    return (
-      <Flex flexDirection="column" gap={3}>
-        <PlotNFTSelectFaucet step={step} onCancel={onCancel} />
-        {!onCancel && (
-          <Flex gap={1}>
-            <Form methods={methods} onSubmit={handleSubmit}>
-              <FormBackButton variant="outlined" />
-            </Form>
-          </Flex>
-        )}
-      </Flex>
-    );
   }
 
   return (

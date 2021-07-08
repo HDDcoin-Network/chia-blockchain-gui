@@ -2,12 +2,13 @@ import React from 'react';
 import { Trans } from '@lingui/macro';
 import { useSelector } from 'react-redux';
 import FarmCard from '../../farm/card/FarmCard';
-import { FormatLargeNumber } from '@chia/core';
+import { FormatLargeNumber } from '@hddcoin/core';
 import type { RootState } from '../../../modules/rootReducer';
 
 export default function FullNodeCardTotalIterations() {
   const state = useSelector(
-    (state: RootState) => state.full_node_state.blockchain_state,
+    (state: RootState) =>
+      state.full_node_state.blockchain_state,
   );
 
   const loading = !state?.peak;

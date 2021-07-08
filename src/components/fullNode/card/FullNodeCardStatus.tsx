@@ -1,7 +1,7 @@
 import React from 'react';
 import { Trans } from '@lingui/macro';
 import { useSelector } from 'react-redux';
-import { FormatLargeNumber } from '@chia/core';
+import { FormatLargeNumber } from '@hddcoin/core';
 import styled from 'styled-components';
 import FarmCard from '../../farm/card/FarmCard';
 import type { RootState } from '../../../modules/rootReducer';
@@ -56,7 +56,12 @@ export default function FullNodeCardStatus() {
 
   const loading = !state || !state.sync;
   if (loading) {
-    return <FarmCard loading title={<Trans>Status</Trans>} />;
+    return (
+      <FarmCard
+        loading
+        title={<Trans>Status</Trans>}
+      />
+    );
   }
 
   const { value, tooltip, color } = getData(state?.sync);

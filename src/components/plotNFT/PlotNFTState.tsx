@@ -1,6 +1,6 @@
 import React from 'react';
 import { Trans } from '@lingui/macro';
-import { Flex, State, StateTypography, TooltipIcon } from '@chia/core';
+import { Flex, State, StateTypography, TooltipIcon } from '@hddcoin/core';
 import { Typography } from '@material-ui/core';
 import type PlotNFT from '../../types/PlotNFT';
 import PlotNFTStateEnum from '../../constants/PlotNFTState';
@@ -43,10 +43,7 @@ export default function PlotNFTState(props: Props) {
           <Trans>Pending</Trans>
         </StateTypography>
         <TooltipIcon>
-          <Trans>
-            PlotNFT is transitioning to (target state). This can take a while.
-            Please do not close the application until this is finalized.
-          </Trans>
+          <Trans>PlotNFT is transitioning to (target state)</Trans>
         </TooltipIcon>
       </Flex>
     );

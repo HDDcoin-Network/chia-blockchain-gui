@@ -1,5 +1,5 @@
 import React from 'react';
-import { Loading, Flex } from '@chia/core';
+import { Loading, Flex } from '@hddcoin/core';
 import { Grid } from '@material-ui/core';
 import PlotHero from './PlotOverviewHero';
 import PlotOverviewPlots from './PlotOverviewPlots';
@@ -12,7 +12,11 @@ export default function PlotOverview() {
 
   return (
     <Flex flexDirection="column" gap={3}>
-      {loading && <Loading center />}
+      {loading && (
+        <Flex alignItems="center" justifyContent="center">
+          <Loading />
+        </Flex>
+      )}
 
       {!loading && (
         <>

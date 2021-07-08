@@ -9,7 +9,7 @@ import {
   FormatBytes,
   StateColor,
   Address,
-} from '@chia/core';
+} from '@hddcoin/core';
 import {
   Box,
   Typography,
@@ -82,12 +82,6 @@ const cols = [
   },
   {
     minWidth: '100px',
-    field: 'harvester.node_id',
-    tooltip: 'harvester.node_id',
-    title: <Trans>Node Id</Trans>,
-  },
-  {
-    minWidth: '100px',
     field: ({ pool_contract_puzzle_hash }: Plot) => (
       <Address value={pool_contract_puzzle_hash} tooltip copyToClipboard>
         {(address) => (
@@ -129,7 +123,7 @@ export default function PlotOverviewPlots() {
     <>
       <PlotHeader>
         <Typography variant="h5">
-          <Trans>Harvester Plots</Trans>
+          <Trans>Local Harvester Plots</Trans>
         </Typography>
       </PlotHeader>
       <Card>
@@ -137,7 +131,7 @@ export default function PlotOverviewPlots() {
           <Flex flexGrow={1}>
             <Typography variant="body2">
               <Trans>
-                Want to earn more Chia? Add more plots to your farm.
+                Want to earn more HDDcoin? Add more plots to your farm.
               </Trans>
             </Typography>
           </Flex>
@@ -160,7 +154,6 @@ export default function PlotOverviewPlots() {
                       <PlotQueueSize queueItem={item} />
                     </TableCell>
                     <TableCell>{item.queue}</TableCell>
-                    <TableCell />
                     <TableCell />
                     <TableCell />
                     <TableCell />

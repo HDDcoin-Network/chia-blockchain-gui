@@ -2,7 +2,7 @@ import React from 'react';
 import { Trans } from '@lingui/macro';
 import { useSelector } from 'react-redux';
 import FarmCard from '../../farm/card/FarmCard';
-import { FormatBytes } from '@chia/core';
+import { FormatBytes } from '@hddcoin/core';
 import { RootState } from '../../../modules/rootReducer';
 
 export default function FullNodeEstimatedNetworkSpace() {
@@ -10,7 +10,7 @@ export default function FullNodeEstimatedNetworkSpace() {
     (state: RootState) => state.full_node_state.blockchain_state,
   );
 
-  const loading = state?.space === undefined;
+  const loading = !state;
   const value = state?.space;
 
   return (

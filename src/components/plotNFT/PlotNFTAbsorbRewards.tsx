@@ -12,7 +12,7 @@ import {
   Form,
   FormBackButton,
   State,
-} from '@chia/core';
+} from '@hddcoin/core';
 import { useForm } from 'react-hook-form';
 import { ChevronRight as ChevronRightIcon } from '@material-ui/icons';
 import { Grid, Typography } from '@material-ui/core';
@@ -21,7 +21,7 @@ import usePlotNFTs from '../../hooks/usePlotNFTs';
 import { pwAbsorbRewards } from '../../modules/plotNFT';
 import { SubmitData } from './select/PlotNFTSelectPool';
 import PlotNFTName from './PlotNFTName';
-import { mojo_to_chia, chia_to_mojo } from '../../util/chia';
+import { mojo_to_hddcoin, hddcoin_to_mojo } from '../../util/hddcoin';
 import useStandardWallet from '../../hooks/useStandardWallet';
 
 type FormData = {
@@ -64,7 +64,7 @@ export default function PlotNFTAbsorbRewards(props: Props) {
 
       const { fee } = data;
 
-      const feeMojos = chia_to_mojo(fee);
+      const feeMojos = hddcoin_to_mojo(fee);
 
       if (walletId === undefined || !address) {
         return;
@@ -127,9 +127,7 @@ export default function PlotNFTAbsorbRewards(props: Props) {
             step="1"
             title={
               <Flex gap={1} alignItems="center">
-                <Flex flexGrow={1}>
-                  <Trans>Please Confirm</Trans>
-                </Flex>
+                <Flex flexGrow={1}>Please Confirm</Flex>
               </Flex>
             }
           >
@@ -137,7 +135,7 @@ export default function PlotNFTAbsorbRewards(props: Props) {
               <Trans>
                 You will recieve{' '}
                 <UnitFormat
-                  value={mojo_to_chia(BigInt(balance))}
+                  value={mojo_to_hddcoin(BigInt(balance))}
                   display="inline"
                   state={State.SUCCESS}
                 />{' '}

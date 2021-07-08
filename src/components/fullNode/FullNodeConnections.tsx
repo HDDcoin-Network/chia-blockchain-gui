@@ -5,12 +5,13 @@ import { Delete as DeleteIcon } from '@material-ui/icons';
 import styled from 'styled-components';
 import {
   Card,
+  Flex,
   FormatBytes,
   FormatLargeNumber,
   Loading,
   Table,
   IconButton,
-} from '@chia/core';
+} from '@hddcoin/core';
 import { Button, Tooltip } from '@material-ui/core';
 import { service_connection_types } from '../../util/service_names';
 import Connection from '../../types/Connection';
@@ -116,7 +117,9 @@ export default function Connections() {
       {connections ? (
         <Table cols={cols} rows={connections} />
       ) : (
-        <Loading center />
+        <Flex justifyContent="center">
+          <Loading />
+        </Flex>
       )}
     </Card>
   );
